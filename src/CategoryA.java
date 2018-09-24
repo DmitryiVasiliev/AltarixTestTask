@@ -103,19 +103,61 @@ public class CategoryA {
         int n = scanner.nextInt();
         System.out.print("Введите M: ");
         int m = scanner.nextInt();
-        int[] arrayWin = new int[2];
-        if(n >= 4 && m >= 4) {
-            int[][] array = new int[n][m];
-            for (int i = 0; i < n; i++) {
-                for (int j = 0; j < m; j++) {
-                    array[i][j] = scanner.nextInt();
-                }
+        int[][] array = new int[n][m];
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                array[i][j] = scanner.nextInt();
             }
-            arrayWin[0] = 1;
-            arrayWin[1] = 1;
         }
-        else{ System.out.println("FAIL");}
-       if(n >=4 && m>=4) System.out.println(arrayWin[0]+" "+arrayWin[1]);
+        int[] arrayCoord = new int[2];
+        System.out.println("Введите окно ");
+        System.out.print("Введите K : ");
+        int k = scanner.nextInt();
+        System.out.print("Введите F: ");
+        int f = scanner.nextInt();
+
+            int[][] arrayWin = new int[k][f];
+
+        for (int i = 0; i < k; i++) {
+            for (int j = 0; j < f; j++) {
+                arrayWin[i][j] = scanner.nextInt();
+            }
+        }
+        int coordi=-1;
+        int coordj=-1;
+        boolean check = true;
+        boolean checkFind = false;
+        for (int i = 0; i < n; i++) {
+            if(checkFind) break;
+            for (int j = 0; j < m; j++) {
+                if(checkFind) break;
+                if(array[i][j] == arrayWin[0][0]) {
+                    check = true;
+                    coordi = i;
+                    coordj = j;
+                    for (int w = 0; w < k; w++) {
+                        for (int e = 0; e < f; e++) {
+                            if (w + i < n && e + j < m)
+                                if (array[w + i][e + j] != arrayWin[w][e]) {
+                                    coordi = -1;
+                                    coordj = -1;
+                                    check = false;
+                                    break;
+                                }
+                        }
+                        if (!check) break;
+                    }
+                    if ( check == false) break;
+                    else checkFind = true;
+                }
+                }
+
+            }
+
+
+            if(coordi != -1 && coordj !=-1 && checkFind) System.out.println(coordi+" "+coordj);
+            else System.out.println("FAIL");
+
 
     }
 }
