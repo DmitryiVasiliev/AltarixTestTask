@@ -1,8 +1,11 @@
-import java.util.Scanner;
+import CategoryC.CategoryC;
 
+import java.io.IOException;
+import java.util.Scanner;
+import CategoryC.*;
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         Scanner scanner = new Scanner(System.in);
         System.out.println("1.Категория А");
         System.out.println("2.Категория В");
@@ -50,6 +53,12 @@ public class Main {
                 }
                 break;
             case 3:
+                View view = View.getInstance();
+                view.getSelect();
+             //   Controller controller = Controller.getInstance();
+              //  controller.ReadString();
+
+
                 break;
             default:
                 break;
