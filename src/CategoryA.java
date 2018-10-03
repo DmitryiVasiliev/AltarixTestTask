@@ -18,7 +18,7 @@ public class CategoryA {
         return select;
     }
 
-    public boolean Task1() {
+    public boolean Task1() {  // Здесь использовался метод относительности
         System.out.println("Ax");
         double ax = scanner.nextInt();
         System.out.println("Ay");
@@ -35,7 +35,7 @@ public class CategoryA {
         double tx = scanner.nextInt();
         System.out.println("Ty");
         double ty = scanner.nextInt();
-        double side1 = RelatMethod(ax, ay, bx, by, tx, ty); // Метод относительности
+        double side1 = RelatMethod(ax, ay, bx, by, tx, ty);
         double side2 = RelatMethod(bx, by, cx, cy, tx, ty);
         double side3 = RelatMethod(cx, cy, ax, ay, tx, ty);
         if (side1 >= 0 && side2 >= 0 && side3 >= 0) return true;
@@ -140,10 +140,10 @@ public class CategoryA {
             for (int j = 0; j < m; j++) {
                 if (checkFind) break;
                 if (array[i][j] == arrayWin[0][0]) {
-                    check = true;
+                    check = true;   // запоминаем координаты если встретили первое совпадающее число
                     coordi = i;
                     coordj = j;
-                    for (int w = 0; w < k; w++) {
+                    for (int w = 0; w < k; w++) {   // дальше проверяем все остальные элементы основного массива относительно предположительного окна
                         for (int e = 0; e < f; e++) {
                             if (w + i < n && e + j < m)
                                 if (array[w + i][e + j] != arrayWin[w][e]) {

@@ -13,23 +13,24 @@ import java.util.Stack;
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlSeeAlso(ArrayList.class)
-public class CategoryC {
+public class CategoryC { // вся основная логика
     private BufferedReader reader;
     private String number = "0123456789";
     private String mathsymb = "*/+-()^";
     private ArrayList<String> example;
     private ArrayList<String> result;
-    private String opz = "";
-    private double arg;
+
     private Stack<Double> stnumb;
-    @XmlElement(name = "Data")
-    private ArrayList<Data> datalist = null;
+
 
     public CategoryC() {
         stnumb = new Stack<>();
         example = new ArrayList<>();
         result = new ArrayList<>();
-        datalist = new ArrayList<Data>();
+
+    }
+    public int getSize(){
+        return example.size();
     }
 
     public void setEx(String example) {
@@ -61,7 +62,7 @@ public class CategoryC {
     }
 
 
-    public String Opz(String[] array) {
+    public String Opz(String[] array) { // преобразование введенного выражения в обратную польскую запись
         String opz1 = "";
 
         Stack<String> stmath = new Stack<>();
@@ -124,7 +125,7 @@ public class CategoryC {
         return opz1;
     }
 
-    public double Results(String opz) {
+    public double Results(String opz) { // подсчет результат выражения по обратной польской записи
         double result = 0;
         String[] vecnm = opz.split(" ");
 
@@ -150,7 +151,7 @@ public class CategoryC {
         return result;
     }
 
-    public double Trigon(String ex, int i) {
+    public double Trigon(String ex, int i) {// Тригонометрическе функции
         double res = 0;
         switch (i) {
             case 1:
@@ -172,7 +173,7 @@ public class CategoryC {
         return res;
     }
 
-    public String SysS(String ex) {
+    public String SysS(String ex) {// Системы счисления
         String res = "";
         String[] array = ex.split(" ");
         if (array[0].equals("10")) {
@@ -203,14 +204,14 @@ public class CategoryC {
         return res;
     }
 
-    public void JaxbEx() throws JAXBException {
+    public void JaxbEx() throws JAXBException {// JAXB(начиная с java 9 находится в java EE) для сохранения в xml последних результатов работает при нажатии выход
         Datalist datalist = new Datalist();
         datalist.setDatalist(new ArrayList<Data>());
         for (int i = 0; i < example.size(); i++) {
             Data data = new Data();
             data.setExample(example.get(i));
             data.setResult(result.get(i));
-            datalist.getEmployees().add(data);
+            datalist.getDatalist().add(data);
         }
 
 
@@ -220,15 +221,15 @@ public class CategoryC {
         //marshaller.marshal(datalist,System.out);
         marshaller.marshal(datalist, new File("Save.xml"));
     }
-    public Datalist JaxbReader() throws JAXBException {
-        if(new File("Save.xml").exists()) {
+
+    public Datalist JaxbReader() throws JAXBException { // вывод на экран сохраненных выражений
+        if (new File("Save.xml").exists()) {
             File file = new File("Save.xml");
             JAXBContext context = JAXBContext.newInstance(Datalist.class);
             Unmarshaller unmarshaller = context.createUnmarshaller();
             Datalist datalist = (Datalist) unmarshaller.unmarshal(file);
             return datalist;
-        }
-        else return null;
+        } else return null;
     }
 
 

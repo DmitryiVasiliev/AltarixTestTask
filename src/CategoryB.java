@@ -21,7 +21,7 @@ public class CategoryB {
         return select;
     }
 
-    public String task1() {
+    public String task1() { // Здесь использвался принцип обратной польской записи
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
         String skob = "";
         boolean flag = true;
@@ -34,7 +34,7 @@ public class CategoryB {
         }
         skob.replace(" ", "");
 
-        for (int i = 0; i < skob.length(); i++) {
+        for (int i = 0; i < skob.length(); i++) {   // добавляем в стек открывающеяся скобки и ждем закрывающихся
             if (skob.charAt(i) == '(' || skob.charAt(i) == '{' || skob.charAt(i) == '[')
                 stack.push(skob.charAt(i));
 
@@ -69,7 +69,7 @@ public class CategoryB {
 
     }
 
-    public void task2() {
+    public void task2() {  // Заполнятся по спирали периметр матрицы и затем аналогично заполняется  незаполненная часть матрицы(происходит сужение к центру)
         System.out.println("Введите N");
         int n = scanner.nextInt();
         //  int[] source = new int[n*n];

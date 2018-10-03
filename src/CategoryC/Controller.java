@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Scanner;
 
-public class Controller {
+public class Controller { // контроллер между интерфесом и логикой
     private BufferedReader reader;
     private static Controller instance = null;
     private CategoryC categoryC = null;
@@ -16,7 +16,7 @@ public class Controller {
         categoryC = new CategoryC();
     }
 
-    public synchronized static Controller getInstance() {
+    public synchronized static Controller getInstance() { // паттерн проектирования singleton
         if (instance == null)
             instance = new Controller();
         return instance;
@@ -34,25 +34,25 @@ public class Controller {
                 View.Print(res);
                 break;
             case 2:
-                ReadString("cos( "+View.setArg()+" )");
+                ReadString("cos( " + View.setArg() + " )");
                 res = String.valueOf(categoryC.Trigon(categoryC.getEx().split(" ")[1], 1));
                 categoryC.setRes(res);
                 View.Print(res);
                 break;
             case 3:
-                ReadString("sin( "+View.setArg()+" )");
+                ReadString("sin( " + View.setArg() + " )");
                 res = String.valueOf(categoryC.Trigon(categoryC.getEx().split(" ")[1], 2));
                 categoryC.setRes(res);
                 View.Print(res);
                 break;
             case 4:
-                ReadString("tg( "+View.setArg()+" )");
+                ReadString("tg( " + View.setArg() + " )");
                 res = String.valueOf(categoryC.Trigon(categoryC.getEx().split(" ")[1], 3));
                 categoryC.setRes(res);
                 View.Print(res);
                 break;
             case 5:
-                ReadString("ctg( "+View.setArg()+" )");
+                ReadString("ctg( " + View.setArg() + " )");
                 res = String.valueOf(categoryC.Trigon(categoryC.getEx().split(" ")[1], 4));
                 categoryC.setRes(res);
                 View.Print(res);
@@ -64,15 +64,17 @@ public class Controller {
                 View.Print(res);
                 break;
             case 7:
-                  View.Print(categoryC.JaxbReader());
+                View.Print(categoryC.JaxbReader());
                 break;
             case 8:
+                if(categoryC.getSize() > 0)
                 categoryC.JaxbEx();
                 check = false;
                 break;
-                default:System.out.println("Введите верную цирфу");
+            default:
+                System.out.println("Введите верную цирфу");
         }
-        return  check;
+        return check;
 
     }
 

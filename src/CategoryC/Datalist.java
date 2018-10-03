@@ -7,13 +7,12 @@ import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 
 @XmlRootElement(name = "SaveOperations")
-@XmlAccessorType (XmlAccessType.FIELD)
-public class Datalist
-{
+@XmlAccessorType(XmlAccessType.FIELD)
+public class Datalist { // хранение данных
     @XmlElement
     private List<Data> datalist = null;
 
-    public List<Data> getEmployees() {
+    public List<Data> getDatalist() {
         return datalist;
     }
 
