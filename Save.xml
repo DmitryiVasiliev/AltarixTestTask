@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<SaveOperations>
+    <datalist>
+        <Example>(2+4*2/1)</Example>
+        <Answer>10.0</Answer>
+    </datalist>
+</SaveOperations>
