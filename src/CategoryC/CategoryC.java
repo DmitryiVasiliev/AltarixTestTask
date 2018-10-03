@@ -1,13 +1,17 @@
 package CategoryC;
 
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+import javax.xml.bind.annotation.*;
 import java.io.BufferedReader;
-import java.io.InputStreamReader;
+import java.io.File;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Stack;
-import javax.xml.
 
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlSeeAlso(ArrayList.class)
 public class CategoryC {
     private BufferedReader reader;
     private String number = "0123456789";
@@ -17,11 +21,14 @@ public class CategoryC {
     private String opz = "";
     private double arg;
     private Stack<Double> stnumb;
+    @XmlElement(name = "Data")
+    private ArrayList<Data> datalist=null;
 
     public CategoryC() {
         stnumb = new Stack<>();
         example = new ArrayList<>();
         result = new ArrayList<>();
+        datalist = new ArrayList<Data>();
     }
 
     public void setEx(String example) {
@@ -178,7 +185,22 @@ public class CategoryC {
         }
         return res;
     }
-    public void JaxbEx(){
+    public void JaxbEx() throws JAXBException {
+        Datalist datalist = new Datalist();
+        datalist.setDatalist(new ArrayList<Data>());
+        for (int i=0;i<example.size();i++){
+            Data data = new Data();
+            data.setExample(example.get(i));
+            data.setResult(result.get(i));
+            datalist.getEmployees().add(data);
+        }
+
+
+        JAXBContext jaxbContext = JAXBContext.newInstance(Datalist.class);
+        Marshaller marshaller = jaxbContext.createMarshaller();
+        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT,true);
+        marshaller.marshal(datalist,System.out);
+        marshaller.marshal(datalist,new File("Save.xml"));
     }
 
 

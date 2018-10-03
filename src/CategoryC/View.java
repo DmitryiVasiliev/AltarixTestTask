@@ -1,5 +1,6 @@
 package CategoryC;
 
+import javax.xml.bind.JAXBException;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -20,16 +21,19 @@ public class View {
             instance = new View();
         return instance;
     }
-    public void getSelect() throws IOException {
-        System.out.println("1.Скобочное выражение ");
-        System.out.println("2.Найти cos ");
-        System.out.println("3.Найти sin ");
-        System.out.println("4.Найти tg ");
-        System.out.println("5.Найти ctg ");
-        System.out.println("6.Системы счисления");
-        System.out.println("7.Выход ");
+    public void getSelect() throws IOException, JAXBException {
+        boolean check = true;
+        while(check) {
+            System.out.println("1.Скобочное выражение ");
+            System.out.println("2.Найти cos ");
+            System.out.println("3.Найти sin ");
+            System.out.println("4.Найти tg ");
+            System.out.println("5.Найти ctg ");
+            System.out.println("6.Системы счисления");
+            System.out.println("7.Выход ");
 
-        controller.Calc(scanner.nextInt());
+            check = controller.Calc(scanner.nextInt());
+        }
     }
 
     public static String setArg () throws IOException {

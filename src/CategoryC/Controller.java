@@ -1,5 +1,6 @@
 package CategoryC;
 
+import javax.xml.bind.JAXBException;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -22,9 +23,10 @@ public class Controller {
         return instance;
     }
 
-    public void Calc(int n) throws IOException {
+    public boolean Calc(int n) throws IOException, JAXBException {
         double res = 0;
         String resSys = "";
+        boolean check = true;
         switch (n) {
             case 1:
                 ReadString(View.setEx());
@@ -63,9 +65,11 @@ public class Controller {
                 View.Print(resSys);
                 break;
             case 7:
-
+                categoryC.JaxbEx();
+                check = false;
                 break;
         }
+        return  check;
 
     }
 
