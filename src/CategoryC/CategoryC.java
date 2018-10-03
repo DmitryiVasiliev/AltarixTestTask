@@ -3,6 +3,7 @@ package CategoryC;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.*;
 import java.io.BufferedReader;
 import java.io.File;
@@ -17,12 +18,12 @@ public class CategoryC {
     private String number = "0123456789";
     private String mathsymb = "*/+-()^";
     private ArrayList<String> example;
-    private ArrayList<Double> result;
+    private ArrayList<String> result;
     private String opz = "";
     private double arg;
     private Stack<Double> stnumb;
     @XmlElement(name = "Data")
-    private ArrayList<Data> datalist=null;
+    private ArrayList<Data> datalist = null;
 
     public CategoryC() {
         stnumb = new Stack<>();
@@ -35,7 +36,7 @@ public class CategoryC {
         this.example.add(example);
     }
 
-    public void setRes(double res) {
+    public void setRes(String res) {
         this.result.add(res);
     }
 
@@ -43,7 +44,7 @@ public class CategoryC {
         return example.get(example.size() - 1);
     }
 
-    public Double getRes() {
+    public String getRes() {
         return result.get(result.size() - 1);
     }
 
@@ -84,6 +85,7 @@ public class CategoryC {
                     stmath.push(array[i]);
                 } else if (array[i].equals(")")) {
                     while (!stmath.peek().equals("(")) {
+
                         opz1 += stmath.pop();
                         opz1 += " ";
 
@@ -178,17 +180,33 @@ public class CategoryC {
             if (array[2].equals("8")) res = Integer.toOctalString(Integer.parseInt(array[1]));
             if (array[2].equals("16")) res = Integer.toHexString(Integer.parseInt(array[1]));
         } else {
-            if (array[0].equals("2")) res = String.valueOf(Integer.parseInt(array[1], 2));
-            if (array[0].equals("8")) res = String.valueOf(Integer.parseInt(array[1], 8));
-            if (array[0].equals("16")) res = String.valueOf(Integer.parseInt(array[1], 16));
+            if (array[0].equals("2") && array[2].equals("10")) res = String.valueOf(Integer.parseInt(array[1], 2));
+            else if (array[0].equals("2") && array[2].equals("8"))
+                res = Integer.toOctalString(Integer.parseInt(String.valueOf(Integer.parseInt(array[1], 2))));
+            else if (array[0].equals("2") && array[2].equals("16"))
+                res = Integer.toHexString(Integer.parseInt(String.valueOf(Integer.parseInt(array[1], 2))));
+            else if (array[0].equals("2") && array[2].equals("2")) res = array[1];
+            if (array[0].equals("8") && array[2].equals("10")) res = String.valueOf(Integer.parseInt(array[1], 8));
+            else if (array[0].equals("8") && array[2].equals("2"))
+                res = Integer.toBinaryString(Integer.parseInt(String.valueOf(Integer.parseInt(array[1], 8))));
+            else if (array[0].equals("8") && array[2].equals("16"))
+                res = Integer.toHexString(Integer.parseInt(String.valueOf(Integer.parseInt(array[1], 8))));
+            else if (array[0].equals("8") && array[2].equals("8")) res = array[1];
+            if (array[0].equals("16") && array[2].equals("10")) res = String.valueOf(Integer.parseInt(array[1], 16));
+            else if (array[0].equals("16") && array[2].equals("8"))
+                res = Integer.toOctalString(Integer.parseInt(String.valueOf(Integer.parseInt(array[1], 16))));
+            else if (array[0].equals("16") && array[2].equals("2"))
+                res = Integer.toBinaryString(Integer.parseInt(String.valueOf(Integer.parseInt(array[1], 16))));
+            else if (array[0].equals("16") && array[2].equals("16")) res = array[1];
 
         }
         return res;
     }
+
     public void JaxbEx() throws JAXBException {
         Datalist datalist = new Datalist();
         datalist.setDatalist(new ArrayList<Data>());
-        for (int i=0;i<example.size();i++){
+        for (int i = 0; i < example.size(); i++) {
             Data data = new Data();
             data.setExample(example.get(i));
             data.setResult(result.get(i));
@@ -198,9 +216,19 @@ public class CategoryC {
 
         JAXBContext jaxbContext = JAXBContext.newInstance(Datalist.class);
         Marshaller marshaller = jaxbContext.createMarshaller();
-        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT,true);
-        marshaller.marshal(datalist,System.out);
-        marshaller.marshal(datalist,new File("Save.xml"));
+        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+        //marshaller.marshal(datalist,System.out);
+        marshaller.marshal(datalist, new File("Save.xml"));
+    }
+    public Datalist JaxbReader() throws JAXBException {
+        if(new File("Save.xml").exists()) {
+            File file = new File("Save.xml");
+            JAXBContext context = JAXBContext.newInstance(Datalist.class);
+            Unmarshaller unmarshaller = context.createUnmarshaller();
+            Datalist datalist = (Datalist) unmarshaller.unmarshal(file);
+            return datalist;
+        }
+        else return null;
     }
 
 

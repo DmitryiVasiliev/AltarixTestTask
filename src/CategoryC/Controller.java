@@ -12,7 +12,6 @@ public class Controller {
     private CategoryC categoryC = null;
 
     private Controller() {
-        System.out.println("Что умеет делать кальк");
         reader = new BufferedReader(new InputStreamReader(System.in));
         categoryC = new CategoryC();
     }
@@ -24,54 +23,59 @@ public class Controller {
     }
 
     public boolean Calc(int n) throws IOException, JAXBException {
-        double res = 0;
-        String resSys = "";
+        String res = "";
+
         boolean check = true;
         switch (n) {
             case 1:
                 ReadString(View.setEx());
-                res = categoryC.Results(categoryC.Opz(categoryC.getEx().replace(" ", "").split("")));
+                res = String.valueOf(categoryC.Results(categoryC.Opz(categoryC.getEx().replace(" ", "").split(""))));
                 categoryC.setRes(res);
                 View.Print(res);
                 break;
             case 2:
-                ReadString(View.setArg());
-                res = categoryC.Trigon(categoryC.getEx(), 1);
+                ReadString("cos( "+View.setArg()+" )");
+                res = String.valueOf(categoryC.Trigon(categoryC.getEx().split(" ")[1], 1));
                 categoryC.setRes(res);
                 View.Print(res);
                 break;
             case 3:
-                ReadString(View.setArg());
-                res = categoryC.Trigon(categoryC.getEx(), 2);
+                ReadString("sin( "+View.setArg()+" )");
+                res = String.valueOf(categoryC.Trigon(categoryC.getEx().split(" ")[1], 2));
                 categoryC.setRes(res);
                 View.Print(res);
                 break;
             case 4:
-                ReadString(View.setArg());
-                res = categoryC.Trigon(categoryC.getEx(), 3);
+                ReadString("tg( "+View.setArg()+" )");
+                res = String.valueOf(categoryC.Trigon(categoryC.getEx().split(" ")[1], 3));
                 categoryC.setRes(res);
                 View.Print(res);
                 break;
             case 5:
-                ReadString(View.setArg());
-                res = categoryC.Trigon(categoryC.getEx(), 4);
+                ReadString("ctg( "+View.setArg()+" )");
+                res = String.valueOf(categoryC.Trigon(categoryC.getEx().split(" ")[1], 4));
                 categoryC.setRes(res);
                 View.Print(res);
                 break;
             case 6:
                 ReadString(View.setExSys());
-                resSys = categoryC.SysS(categoryC.getEx());
-                categoryC.setRes(Integer.parseInt(resSys));
-                View.Print(resSys);
+                res = categoryC.SysS(categoryC.getEx());
+                categoryC.setRes(res);
+                View.Print(res);
                 break;
             case 7:
+                  View.Print(categoryC.JaxbReader());
+                break;
+            case 8:
                 categoryC.JaxbEx();
                 check = false;
                 break;
+                default:System.out.println("Введите верную цирфу");
         }
         return  check;
 
     }
+
 
     public void ReadString(String opz) {
         categoryC.setEx(opz);

@@ -4,6 +4,7 @@ import javax.xml.bind.JAXBException;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.List;
 import java.util.Scanner;
 
 public class View {
@@ -30,7 +31,8 @@ public class View {
             System.out.println("4.Найти tg ");
             System.out.println("5.Найти ctg ");
             System.out.println("6.Системы счисления");
-            System.out.println("7.Выход ");
+            System.out.println("7.Просмотр сохраненных выражений");
+            System.out.println("8.Выход ");
 
             check = controller.Calc(scanner.nextInt());
         }
@@ -55,6 +57,15 @@ public class View {
     public static void Print(String res){
 
         System.out.println("Ответ: "+ res);
+    }
+    public static  void Print(Datalist datalist){
+        if(datalist != null){
+            for (Data data: datalist.getEmployees()
+                 ) {
+                System.out.println("Example: "+data.getExample()+" = "+ data.getResult());
+            }
+        }
+        else System.out.println("Вы еще ничего не сохранили");
     }
 
 
